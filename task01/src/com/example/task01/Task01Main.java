@@ -1,6 +1,7 @@
 package com.example.task01;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -23,7 +24,13 @@ public class Task01Main {
             Function<? super T, ? extends U> ifTrue,
             Function<? super T, ? extends U> ifFalse) {
 
-        return null; // your implementation here
+        Predicate<? super T> safeCondition = Objects.requireNonNull(condition);
+        Function<? super T, ? extends U> trueBranch = Objects.requireNonNull(ifTrue);
+        Function<? super T, ? extends U> falseBranch = Objects.requireNonNull(ifFalse);
+
+        return value -> safeCondition.test(value)
+                ? trueBranch.apply(value)
+                : falseBranch.apply(value);
 
     }
 }
